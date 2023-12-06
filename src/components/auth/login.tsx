@@ -1,13 +1,32 @@
 import React from 'react';
-import { LockOutlined, UserOutlined, PhoneOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Tabs } from 'antd';
-import './login.scss'
+import { LockOutlined, UserOutlined, PhoneOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { Button, Checkbox, Form, Input, Tabs, Select } from 'antd';
+import './login.scss';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import {login} from '../../services/auth/authSlice';
 
 const { TabPane } = Tabs;
+const { Option } = Select;
+const CountrySelector = () => {
+  return (
+    <Select
+      style={{ width: 100 }}
+      defaultValue="+84"
+    >
+      <Option value="+84">VN +84</Option>
+      <Option value="+1">USA +1</Option>
+    </Select>
+  );
+};
 
-const Login: React.FC = () => {
+
+
+const LoginPage: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const [passwordVisible, setPasswordVisible] = React.useState(false);
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
+    dispatch(login(values));
   };
 
   return (
@@ -22,14 +41,14 @@ const Login: React.FC = () => {
         <Tabs defaultActiveKey="1" centered  className="login-tabs">
             <TabPane tab="Email" key="1">
               <Form
-                name="email_login"
+                name="email"
                 className="login-form"
-                initialValues={{ remember: true }}
+                // initialValues={{ remember: true }}
                 onFinish={onFinish}
               >
                 {/* Email login form items */}
                   <Form.Item
-                    name="email_login"
+                    name="email"
                     rules={[{ required: true, message: 'Please input your email!' }]}
                   >
                     <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Your Email" />
@@ -38,16 +57,17 @@ const Login: React.FC = () => {
                     name="password"
                     rules={[{ required: true, message: 'Please input your Password!' }]}
                   >
-                    <Input
+                    <Input.Password
                       prefix={<LockOutlined className="site-form-item-icon" />}
                       type="password"
                       placeholder="Password"
+                      iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                     />
                   </Form.Item>
                   <Form.Item>
-                    <Form.Item name="remember" valuePropName="checked" noStyle>
+                    {/* <Form.Item name="remember" valuePropName="checked" noStyle>
                       <Checkbox>Remember me</Checkbox>
-                    </Form.Item>
+                    </Form.Item> */}
 
                     <a className="login-form-forgot" href="">
                       Forgot password
@@ -63,32 +83,33 @@ const Login: React.FC = () => {
             </TabPane>
             <TabPane tab="Phone Number" key="2">
               <Form
-                name="phone_login"
+                name="phone_number"
                 className="login-form"
-                initialValues={{ remember: true }}
+                // initialValues={{ remember: true }}
                 onFinish={onFinish}
               >
                 {/* Phone number login form items */}
                 <Form.Item
-                    name="phone_login"
+                    name="phone_number"
                     rules={[{ required: true, message: 'Please input your Phone!' }]}
                   >
-                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Your Phone" />
+                    <Input prefix={<CountrySelector />} placeholder="Your Phone" />
                   </Form.Item>
                   <Form.Item
                     name="password"
                     rules={[{ required: true, message: 'Please input your Password!' }]}
                   >
-                    <Input
+                    <Input.Password
                       prefix={<LockOutlined className="site-form-item-icon" />}
                       type="password"
                       placeholder="Password"
+                      iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                     />
                   </Form.Item>
                   <Form.Item>
-                    <Form.Item name="remember" valuePropName="checked" noStyle>
+                    {/* <Form.Item name="remember" valuePropName="checked" noStyle>
                       <Checkbox>Remember me</Checkbox>
-                    </Form.Item>
+                    </Form.Item> */}
 
                     <a className="login-form-forgot" href="">
                       Forgot password
@@ -108,4 +129,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default LoginPage;
