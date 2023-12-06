@@ -1,33 +1,46 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { LockOutlined, UserOutlined, PhoneOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Tabs, Select } from 'antd';
+import { Button, Form, Input, Tabs, Select } from 'antd';
 import './login.scss';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {login} from '../../services/auth/authSlice';
+import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 
 const { TabPane } = Tabs;
 const { Option } = Select;
-const CountrySelector = () => {
-  return (
-    <Select
-      style={{ width: 100 }}
-      defaultValue="+84"
-    >
-      <Option value="+84">VN +84</Option>
-      <Option value="+1">USA +1</Option>
-    </Select>
-  );
-};
+
 
 
 
 const LoginPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const [passwordVisible, setPasswordVisible] = React.useState(false);
+  const navigate = useNavigate();
+  const authState = useAppSelector(state => state.user);
+
+  const handlePhoneNumber = (phoneNumber, countryCode) => {
+    if (phoneNumber.startsWith('0')) {
+      return `${countryCode}${phoneNumber.substring(1)}`;
+    } else {
+      return `${countryCode}${phoneNumber}`;
+    }
+  };
   const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
+    if (values.phone_number) {
+      values.phone_number = handlePhoneNumber(values.phone_number, values.country_code);
+    }
     dispatch(login(values));
   };
+
+  const { users, isLoginSuccess, isError, loading } = authState;
+  
+  useEffect(() => {
+    if (isLoginSuccess) {
+      navigate("admin");
+    } else {
+      navigate("");
+    }
+  }, [users, isLoginSuccess, isError, loading]);
 
   return (
     <div className="login-container">
@@ -88,12 +101,28 @@ const LoginPage: React.FC = () => {
                 // initialValues={{ remember: true }}
                 onFinish={onFinish}
               >
+                {/* <Form.Item
+                  name="country_code"
+                  rules={[{ required: true, message: 'Please select your country code!' }]}
+                >
+                  <CountrySelector />
+                </Form.Item> */}
+                <Form.Item
+                  name="country_code"
+                  label="Country"
+                  rules={[{ required: true, message: 'Please select your country!' }]}
+                >
+                  <Select placeholder="Select your country">
+                    <Option value="+84">VN</Option>
+                    <Option value="+1">USA</Option>
+                  </Select>
+                </Form.Item>
                 {/* Phone number login form items */}
                 <Form.Item
                     name="phone_number"
                     rules={[{ required: true, message: 'Please input your Phone!' }]}
                   >
-                    <Input prefix={<CountrySelector />} placeholder="Your Phone" />
+                    <Input prefix={<PhoneOutlined className="site-form-item-icon" />} placeholder="Your Phone" />
                   </Form.Item>
                   <Form.Item
                     name="password"

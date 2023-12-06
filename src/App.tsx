@@ -14,8 +14,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/admin" element={<MainLayout />}>
+        <Route path="/" element={<OpenRoutes><Login /></OpenRoutes>} />
+        <Route path="/admin" element={<PrivateRoutes><MainLayout /></PrivateRoutes>}>
           <Route index element={<Home />} />
         </Route>
       </Routes>
