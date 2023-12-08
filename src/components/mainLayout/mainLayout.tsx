@@ -1,9 +1,10 @@
 import type { MenuProps } from 'antd';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import MenuSider from '../sider/menuSider';
+import { Layout, theme } from 'antd';
+import SiderX from '../sider/menuSider';
 import { Outlet } from "react-router-dom";
+import { useMediaQuery } from 'react-responsive';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Footer } = Layout;
 
 const items1: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
   key,
@@ -15,29 +16,19 @@ const MainLayout: React.FC = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-
+  const isMobile = useMediaQuery({ query: `(max-width: 760px)` });
   return (
     <Layout>
-      <Header style={{ display: 'flex', alignItems: 'center' }}>
-        <div className="demo-logo" />
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />
-      </Header>
-      <Content style={{ padding: '0 50px' }}>
-        <Breadcrumb style={{ margin: '16px 0' }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
-        <Layout style={{ padding: '24px 0', background: colorBgContainer }}>
-          <Sider style={{ background: colorBgContainer }}>
-            <MenuSider
-            />
-          </Sider>
-          <Content style={{ 
-            padding: '0 24px', 
+      <Content style={{ padding: '0px' }}>
+        <Layout style={{ padding: '10px 0', background: colorBgContainer,  }}>
+         <SiderX />
+          <Content style={{
+            overflow: isMobile ? "hidden" :'cover',
+            padding: isMobile ?   '0' : '0 24px',
             minHeight: 500,
-            margin: "24px 16px",
+            margin: isMobile ? '0' : "0px 16px",
             background: colorBgContainer, 
+            maxWidth: isMobile ? "inherits" : "inherits" 
             }}><Outlet /></Content>
         </Layout>
       </Content>

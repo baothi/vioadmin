@@ -1,0 +1,56 @@
+
+.sider {
+  background: #1677ff !important;
+  border-radius: 0 8px 8px 8px;
+
+  .ant-layout-sider-zero-width-trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0;
+    cursor: pointer;
+    top: 0px;
+  }
+
+  .sider-logo {
+      max-width: inherit;
+      background-color: #1677ff;
+      height: 50px;
+      border-radius: 8px 8px 0 0;
+      display: flex;
+      justify-content: center;
+      z-index: -1;
+      
+      .vio-logo {
+        margin: 12px;
+      }
+  }
+
+  .ant-menu-light {   
+    .ant-menu-submenu-selected {
+      .ant-menu-submenu-title {
+        color: white;
+      }
+    } 
+  }
+
+  .sider-menu {
+      max-width: inherit;
+      color: white ;
+      background-color: inherit;
+      margin-top: 10px;
+      z-index: 1;
+
+      .ant-menu {
+        ant-menu-dark {
+          .ant-menu-item-selected {
+            background-color: white;
+            opacity: 0.5;
+            z-index: -1;
+          }
+        }
+      }          
+    }
+  }
+
+
+ 
