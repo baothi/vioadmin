@@ -1,14 +1,15 @@
 
 .sider {
   background: #1677ff !important;
-  border-radius: 0 8px 8px 8px;
+  border-radius: 8px;
 
   .ant-layout-sider-zero-width-trigger {
-    font-size: 18px;
-    line-height: 64px;
-    padding: 0;
-    cursor: pointer;
-    top: 0px;
+    // font-size: 18px;
+    // line-height: 64px;
+    // padding: 0;
+    // cursor: pointer;
+    // top: 0px;
+    display: none;
   }
 
   .sider-logo {
@@ -53,4 +54,16 @@
   }
 
 
- 
+ // Adjustments for mobile devices
+ @media (max-width: 768px) {
+  .ant-layout-sider-zero-width-trigger {
+    display: flex !important;
+    padding-left: 5px;
+    font-size: 18px;
+    // line-height: 64px;
+    border-radius: 4px !important;
+    cursor: pointer;
+    top: 0px !important;
+  }
+
+ }

@@ -1,0 +1,22 @@
+.main-content {
+    padding: 0px;
+    .main-layout {
+        padding: 10px 0;
+    }
+    .sub-content  {
+        padding: 0 24px;
+        overflow: cover;
+        min-height: 500px;
+        margin: 0 16px;
+        max-width: inherit;
+    }
+    
+}
+
+@media (max-width: 768px) {
+.sub-content{
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+}
+}
