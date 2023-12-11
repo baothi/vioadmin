@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { AppstoreOutlined, CaretLeftOutlined, MailOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, MailOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Layout, theme, Menu, Card, Button } from 'antd';
+import { Layout, Menu } from 'antd';
 import MenuItem from 'antd/es/menu/MenuItem';
 import './sider.scss'
 
@@ -56,7 +56,6 @@ const rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
 const SiderX: React.FC = () => {
   const [openKeys, setOpenKeys] = useState([]);
   const [collapsed, setCollapsed] = useState(false);
-  // const [isClicked, setIsClicked] = useState(False);
   const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
     if (latestOpenKey && rootSubmenuKeys.indexOf(latestOpenKey!) === -1) {
@@ -65,10 +64,7 @@ const SiderX: React.FC = () => {
       setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
     }
   };
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
-
+ 
   return (  
     <Sider 
     className="sider"

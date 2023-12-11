@@ -1,4 +1,3 @@
-import type { MenuProps } from 'antd';
 import { Layout, theme } from 'antd';
 import SiderX from '../sider/menuSider';
 import { Outlet } from "react-router-dom";
